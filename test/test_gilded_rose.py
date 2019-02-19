@@ -124,3 +124,20 @@ def test_update_quality__BSP_quality_to_0_if_sell_in_is_0():
 
     assert backstage_passes.quality == 0
 
+
+def test_update_quality__conjured_lower_by_two():
+    conjured_bread = Item('Conjured Bread', 10, 20)
+    gilded_rose = GildedRose([conjured_bread])
+
+    gilded_rose.update_quality()
+
+    assert conjured_bread.quality == 18
+
+
+def test_update_quality__conjured_lower_by_2x_after_sell_in():
+    conjured_bread = Item('Conjured Bread', 0, 20)
+    gilded_rose = GildedRose([conjured_bread])
+
+    gilded_rose.update_quality()
+
+    assert conjured_bread.quality == 16
