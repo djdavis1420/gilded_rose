@@ -90,30 +90,39 @@ def test_update_quality__sulfuras_never_changes():
 
 
 def test_update_quality__BSP_quality_plus_3_if_sell_in_less_than_5():
-    backstage_passes = Item('Backstage passes to a TAFKAL80ETC concert', 3, 10)
-    gilded_rose = GildedRose([backstage_passes])
+    backstage_passes1 = Item('Backstage passes to a TAFKAL80ETC concert', 3, 10)
+    backstage_passes2 = Item('Backstage passes to a TAFKAL80ETC concert', 3, 49)
+    gilded_rose = GildedRose([backstage_passes1, backstage_passes2])
 
     gilded_rose.update_quality()
 
-    assert backstage_passes.quality == 13
+    assert backstage_passes1.quality == 13
+    assert backstage_passes2.quality == 50
 
 
 def test_update_quality__BSP_quality_plus_2_if_sell_in_less_than_10_and_more_than_5():
-    backstage_passes = Item('Backstage passes to a TAFKAL80ETC concert', 8, 10)
-    gilded_rose = GildedRose([backstage_passes])
+    backstage_passes1 = Item('Backstage passes to a TAFKAL80ETC concert', 8, 10)
+    backstage_passes2 = Item('Backstage passes to a TAFKAL80ETC concert', 8, 49)
+
+    gilded_rose = GildedRose([backstage_passes1, backstage_passes2])
 
     gilded_rose.update_quality()
 
-    assert backstage_passes.quality == 12
+    assert backstage_passes1.quality == 12
+    assert backstage_passes2.quality == 50
 
 
 def test_update_quality__BSP_quality_plus_1_if_sell_in_more_than_10():
-    backstage_passes = Item('Backstage passes to a TAFKAL80ETC concert', 13, 10)
-    gilded_rose = GildedRose([backstage_passes])
+    backstage_passes1 = Item('Backstage passes to a TAFKAL80ETC concert', 13, 10)
+    backstage_passes2 = Item('Backstage passes to a TAFKAL80ETC concert', 13, 49)
+    backstage_passes3 = Item('Backstage passes to a TAFKAL80ETC concert', 13, 50)
+    gilded_rose = GildedRose([backstage_passes1, backstage_passes2, backstage_passes3])
 
     gilded_rose.update_quality()
 
-    assert backstage_passes.quality == 11
+    assert backstage_passes1.quality == 11
+    assert backstage_passes2.quality == 50
+    assert backstage_passes3.quality == 50
 
 
 def test_update_quality__BSP_quality_to_0_if_sell_in_is_0():
@@ -127,17 +136,22 @@ def test_update_quality__BSP_quality_to_0_if_sell_in_is_0():
 
 def test_update_quality__conjured_lower_by_two():
     conjured_bread = Item('Conjured Bread', 10, 20)
-    gilded_rose = GildedRose([conjured_bread])
+    conjured_water = Item('Conjured Water', 3, 5)
+    gilded_rose = GildedRose([conjured_bread, conjured_water])
 
     gilded_rose.update_quality()
 
     assert conjured_bread.quality == 18
+    assert conjured_water.quality == 3
 
 
 def test_update_quality__conjured_lower_by_2x_after_sell_in():
     conjured_bread = Item('Conjured Bread', 0, 20)
-    gilded_rose = GildedRose([conjured_bread])
+    conjured_water = Item('Conjured Water', 0, 6)
+    gilded_rose = GildedRose([conjured_bread, conjured_water])
 
     gilded_rose.update_quality()
 
     assert conjured_bread.quality == 16
+    assert conjured_water.quality == 2
+
