@@ -1,5 +1,5 @@
 from src.gilded_rose import GildedRose
-from src.gilded_rose import Item
+from src.models.item import Item
 
 
 def test_update_quality__sell_in_lower_by_one():
